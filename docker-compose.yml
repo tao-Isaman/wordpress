@@ -53,7 +53,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email towlovelove@gmail.com --agree-tos --no-eff-email --force-renewal -d blog.backgadino.com -d www.blog.backgadino.com
+    command: certonly --webroot --webroot-path=/var/www/html --email towlovelove@gmail.com --agree-tos --no-eff-email --force-renewal -d blog.backgadino.com
 
 volumes:
   certbot-etc:

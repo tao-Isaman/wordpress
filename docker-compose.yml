@@ -49,12 +49,12 @@ services:
 
   certbot:
     image: certbot/certbot
-    restart: unless-stopped
+    container_name: certbot
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    
+      - certbot-etc:/etc/letsencrypt
+      - wordpress:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email towlovelove@gmail.com --agree-tos --no-eff-email --force-renewal -d blog.backgadino.com -d www.blog.backgadino.com
+
 volumes:
   certbot-etc:
   wordpress:

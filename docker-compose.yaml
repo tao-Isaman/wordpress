@@ -48,15 +48,13 @@ services:
       - app-network
 
   certbot:
-    depends_on:
-      - webserver
     image: certbot/certbot
-    container_name: certbot
+    restart: unless-stopped
     volumes:
-      - certbot-etc:/etc/letsencrypt
-      - wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email sammy@example.com --agree-tos --no-eff-email --force-renewal -d blog.backgadino.com -d www.blog.backgadino.com
-
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    
 volumes:
   certbot-etc:
   wordpress:
